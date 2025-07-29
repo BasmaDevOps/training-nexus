@@ -13,7 +13,7 @@ pipeline {
             }
         }
         //Continuous Delivery
-          stage('Upload-to-Nexus') {
+        stage('Upload-to-Nexus') {
             steps {
                 nexusArtifactUploader artifacts: [
                     [
@@ -23,13 +23,13 @@ pipeline {
                         type: 'jar'
                     ]
                 ],
-                credentialsId: 'nexus',
+                credentialsId: 'Nexus',
                 groupId: 'com.devops',
-                nexusUrl: '34.228.143.204:8081',
+                nexusUrl: '35.180.225.248:8081',
                 nexusVersion: 'nexus3',
                 protocol: 'http',
                 repository: 'compare-service',
-                version: '0.0.1-$BUILD_NUMBER'
+                version: '0.0.1'
             }
         }
         //stage('Docker Build&Push') {
