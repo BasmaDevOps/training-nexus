@@ -29,7 +29,7 @@ pipeline {
                 nexusVersion: 'nexus3',
                 protocol: 'http',
                 repository: 'compare-service',
-                version: '0.0.1'
+                version: '0.0.1-$BUILD_NUMBER'
             }
         }
         //stage('Docker Build&Push') {
