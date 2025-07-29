@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    stages {
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean package -DskipTests=true'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('Docker Build&Push') {
+            steps {
+                withDockerRegistry(credentialsId: 'Docker', url: "") {
+                    sh 'docker build -t issaouidevops/numeric-app .'
+                    sh 'docker push issaouidevops/numeric-app'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                withDockerRegistry(credentialsId: 'Docker', url: "") {
+                    sh 'docker -H ssh://ubuntu@172.31.42.35 run -d --name myapp -p 8082:8080 issaouidevops/numeric-app'
+                }
+            }
+            
+        }
+    }
+}
